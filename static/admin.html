@@ -104,7 +104,7 @@
   var socket = io.connect('http://airane.ninja:3000');
   socket.emit('admin');
   socket.on('admin', function(data) {
-    $('#clientsRoom').html(data);
+    $('#clientsRoom').text(data);
   });
 
   $('#broadcast').click(function(event) {
