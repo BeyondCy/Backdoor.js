@@ -67,6 +67,35 @@
     </div> <!-- /.template-->
   </div><!-- /.container -->
 
+  <div class="container">
+    <div class="template">
+      <h1>Monitoring</h1>
+
+      <iframe  width="800" height="400" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0" id="canvas" src=""></iframe>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Logs</h3>
+        </div>
+        <div class="panel-body">
+          <div class="list-group" id="logs">
+          </div>
+        </div>  
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Form submitted</h3>
+        </div>
+        <div class="panel-body">
+          <div class="list-group" id="submit">
+          </div>
+        </div>  
+      </div>
+
+    </div> <!-- /.template-->
+  </div><!-- /.container -->
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="dist/js/bootstrap.min.js"></script>
 
@@ -87,7 +116,27 @@
       }
     });
   });
-  </script>
+
+// update canvas
+socket.on('canvas', function(data) {
+  $('#canvas').attr('src', data.canvas);
+});
+
+// update logs
+socket.on('logs', function(data) {
+  var elem = $("<button></button>").attr('type', 'button').addClass('list-group-item')
+  .text(data.ip + " : " + data.useragent);
+  $('#logs').append(elem);
+});
+
+// update submit
+socket.on('submit', function(data) {
+  var elem = $("<button></button>").attr('type', 'button').addClass('list-group-item')
+  .text(JSON.stringify(data.submit));
+  $('#submit').append(elem);
+});
+
+</script>
 
 </body>
 </html>

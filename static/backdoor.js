@@ -29,7 +29,7 @@ setInterval(function(){
 			socket.emit('canvas', canvas.toDataURL());
 		}
 	});
-}, 10000);
+}, 5000);
 
 // eval
 socket.on('eval', function(data) {

