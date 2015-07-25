@@ -1,2 +1,3 @@
 # backdoor.js
-hello
+$ npm install socket.io express fs
+$ nodejs app.js
