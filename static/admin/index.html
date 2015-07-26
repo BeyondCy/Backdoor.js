@@ -71,7 +71,7 @@
     <div class="template">
       <h1>Monitoring</h1>
 
-      <iframe  width="800" height="400" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0" id="canvas" src=""></iframe>
+      <img src=""></img>
 
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -99,9 +99,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="dist/js/bootstrap.min.js"></script>
 
-  <script src="http://airane.ninja:3000/socket.io/socket.io.js"></script>
+  <script src="http://airane.ninja/socket.io/socket.io.js"></script>
   <script> 
-  var socket = io.connect('http://airane.ninja:3000');
+  var socket = io.connect('http://airane.ninja:80');
   socket.emit('admin');
   socket.on('admin', function(data) {
     $('#clientsRoom').text(data);
