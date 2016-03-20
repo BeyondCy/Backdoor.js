@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express()
-var server = app.listen(80);
+var server = app.listen(8800);
 var io = require('socket.io')(server);
 var fs = require('fs');
 
