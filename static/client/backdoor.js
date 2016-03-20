@@ -7,7 +7,7 @@ if("null"==i.slice(R,R+4))return R+=4,null;P()}return"$"},q=function(e){var t,n;
 
 
 // 
-var socket = io.connect(cnc.nodejs); // complete here
+var socket = io.connect("http://tfairane:8800"); // complete here
 
 // client
 socket.emit('client');
