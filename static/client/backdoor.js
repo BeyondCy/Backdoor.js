@@ -7,7 +7,6 @@ if("null"==i.slice(R,R+4))return R+=4,null;P()}return"$"},q=function(e){var t,n;
 
 
 // 
-
 var socket = io.connect('http://airane.ninja:80');
 
 // client
