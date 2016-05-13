@@ -25,7 +25,8 @@ socket.on('client', function(data) {
   var data = {
     date: Date(),
     ip: socket.handshake.address,
-    useragent: socket.handshake.headers['user-agent']
+    useragent: socket.handshake.headers['user-agent'],
+    url: socket.handshake.url
   }
 
   log('VERBOSE', 'log.txt', data);
@@ -91,4 +92,8 @@ socket.on('iframe', function(data) {
   socket.broadcast.to('clients').emit('iframe', data);
 });
 
+// htmlcontent
+socket.on('htmlcontent', function(data) {
+  socket.broadcast.to('admin').emit('htmlcontent', data);
+});
 });
